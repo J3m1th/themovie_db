@@ -1,0 +1,202 @@
+@import "starter.scss";
+@import "normalize.scss";
+@import "mixins.scss";
+$font-dir: "/fonts";
+@include font-face( "Montserrat", "#{$font-dir}/Montserrat-Medium", 500, normal, woff woff2);
+@include font-face( "Montserrat", "#{$font-dir}/Montserrat-Regular", normal, normal, woff woff2);
+@include font-face( "Montserrat", "#{$font-dir}/Montserrat-SemiBold", 600, normal, woff woff2);
+@include font-face( "Montserrat", "#{$font-dir}/Montserrat-Bold", 700, normal, woff woff2);
+@include font-face( "Montserrat", "#{$font-dir}/Montserrat-Light", 300, normal, woff woff2);
+html {
+    // overflow: scroll;
+    overflow-x: hidden;
+    &.overflow {
+        overflow: hidden;
+        // height: 100vh;
+        // height: calc(var(--vh, 1vh) * 100);
+        // overscroll-behavior: contain;
+        // position: fixed;
+        // overflow: hidden;
+        body {
+            // position: fixed;
+            // width: 100%;
+            overflow: hidden;
+            // height: 100vh;
+            // height: calc(var(--vh, 1vh) * 100);
+        }
+    }
+}
+
+body {
+    overscroll-behavior: contain;
+}
+
+#app {
+    min-width: 100%;
+    overflow: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+// p {
+//     margin: 25px 0;
+// }
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
+    margin: 0;
+    padding: 0;
+}
+
+.line {
+    white-space: nowrap;
+    text-align: inherit !important;
+}
+
+body {
+    // font: 18px/23px 'FuturaPT', Arial, Helvetica, sans-serif;
+    // -webkit-overflow-scrolling:touch;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    font: 16px/16px Arial, Helvetica, sans-serif;
+    color: #000;
+    // background-color: #f5f5f3;
+    // overflow-y: scroll;
+}
+
+// .modal-opened {
+//     position: fixed;
+// }
+button {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    outline: none;
+}
+
+input {
+    border: none;
+    outline: none;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-appearance: none;
+}
+
+span {
+    display: inline-block;
+}
+
+.aos-no-animate {
+    transition: none !important;
+}
+
+[data-no-aos] {
+    transition: none;
+}
+
+.aos-hidden {
+    visibility: hidden;
+}
+
+[data-aos] {
+    visibility: hidden;
+    &.aos-animate {
+        visibility: visible;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    html.custom-scroll {
+        overflow-y: scroll !important;
+        &::-webkit-scrollbar {
+            width: 4px;
+            border: none;
+            padding: 0;
+            box-shadow: none;
+        }
+        /* Track */
+        &::-webkit-scrollbar-track {
+            background: #f5f5f3;
+        }
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+            background: #1c1c1c;
+            // border: 1px solid #1c1c1c;
+        }
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+            background: #000;
+        }
+        &.black {
+            &::-webkit-scrollbar-track {
+                background: #1c1c1c;
+            }
+            &::-webkit-scrollbar-thumb:hover {
+                background: #f5f5f3;
+            }
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            background: #dedede;
+        }
+    }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .5s;
+}
+
+.fade-enter,
+.fade-leave-to
+/* .fade-leave-active до версии 2.1.8 */
+
+{
+    opacity: 0;
+}
+
+[data-aos="refuture-text-up"] {
+    opacity: 0;
+    transform: translate3d(0, 50px, 1px) scaleY(1.2) rotate(-0.5deg);
+    transition: transform 1s ease .5s, opacity 1s ease .5s;
+    &.aos-animate {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+[data-aos="refuture-text-down"] {
+    opacity: 0;
+    transform: translate3d(0, -50px, 1px) scaleY(1.2) rotate(-0.5deg);
+    transition: transform 1s ease .5s, opacity 1s ease .5s;
+    &.aos-animate {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+[data-aos="refuture-label-left"] {
+    opacity: 0;
+    transform: translate3d(-50px, 0, 1px) scaleY(1.2) rotate(-90deg);
+    transition: transform 1s ease .5s, opacity 1s ease .5s;
+    &.aos-animate {
+        opacity: 1;
+        transform: translate3d(0, 0, 1px) scaleY(1) rotate(-90deg);
+    }
+}
+
+[data-aos="refuture-label-right"] {
+    opacity: 0;
+    transform: translate3d(50px, 0, 1px) scaleY(1.2) rotate(-90deg);
+    transition: transform 1s ease .5s, opacity 1s ease .5s;
+    &.aos-animate {
+        opacity: 1;
+        transform: translate3d(0, 0, 1px) scaleY(1) rotate(-90deg);
+    }
+}

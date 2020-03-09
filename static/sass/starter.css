@@ -1,0 +1,40 @@
+.slider__slide,
+.slider .slick-list,
+.slider .slick-track {
+  height: 100%;
+}
+
+.slider__slide {
+  position: relative;
+}
+
+.slick-slider .slick-list,
+.slick-slider .slick-track,
+.slick-slider .slick-slide {
+  height: 100%;
+}
+
+.slick-slider .slick-slide {
+  position: relative;
+}
+
+.slick-slide {
+  outline: none;
+}
+
+.table {
+  display: table;
+}
+
+.tr {
+  display: table-row;
+}
+
+.td {
+  display: table-cell;
+}
+
+.svg-container {
+  display: none;
+}
+/*# sourceMappingURL=starter.css.map */
