@@ -1,6 +1,6 @@
 <template lang="pug">
 	.block
-		label.block__label(:class="{'selected': (checkedClass || checkPlease)}" title="Favorite movies")
+		label.block__label(:class="{'selected': (checkedClass || checkPlease)}" title="Watch later")
 			input.block__checkbox(type="checkbox" @change="checkInput(); addRemoveMovie()" :value="checked" v-model="checked")
 			| ❤
 </template>
@@ -13,7 +13,6 @@ export default {
 	data() {
         return {
 			checkedClass: false,
-
 			checked: false,
 			favoriteMovies: [],
 			movieId: '',
@@ -24,10 +23,6 @@ export default {
 		checkPlease: {
 			type: Boolean
 		},
-		// 'checked': {
-        //     type: Boolean,
-        //     default: false
-		// },
 	},
 
 	mounted() {
@@ -48,13 +43,6 @@ export default {
 		checked(newVal, oldVal) {
 			this.checkedClass = newVal;
 		},
-		// checkPlease(newVal, oldValue) {
-		// 	console.log('checkPlease')
-		// 	console.log(newVal)
-		// 	console.log(oldValue)
-		// 	console.log('-checkPlease-')
-		// 	this.checkedClass = newVal;
-		// }
 	}
 }
 </script>
@@ -72,7 +60,7 @@ export default {
 			font-size: 16px;
 			color: #ABABAB;
 			cursor: pointer;
-			transition: color .5s ease-out;
+			transition: color .3s ease-out;
 			&.selected {
 				color: #df470b;
 			}

@@ -34,12 +34,6 @@ export default {
 		}
 	},
 
-	computed: {
-		// movieGenre() {
-		// 	return this.genreMovieList.genres.filter(el => el.id === this.page.genre_ids[0]);
-		// }
-	},
-
 	mounted() {
 		if (localStorage.getItem('favoriteMovies')) {
 			try {
@@ -48,15 +42,6 @@ export default {
 				localStorage.removeItem('favoriteMovies');
 			}
 		};
-
-
-		console.log('genreMovieList from info-block')
-		console.log(this.genreMovieList)
-		console.log('movieGenre from info-block')
-		console.log(this.movieGenre)
-
-		console.log(this.page.genres)
-		
 	},
 
 	methods: {
@@ -96,12 +81,11 @@ export default {
 <style lang="scss" scoped>
 	.movie {
 		display: flex;
-		// justify-content:  space-between;
 		&__img {
 			width: 450px;
 			height: auto;
 			object-fit: contain;
-			margin-right: 35px;
+			margin-right: 45px;
 		}
 		
 	}
@@ -117,7 +101,8 @@ export default {
 		}
 		&__title {
 			margin-bottom: 15px;
-			padding-right: 25px; 
+			padding-right: 25px;
+			line-height: 1;
 		}
 		&__date {
 			margin-bottom: 15px;
@@ -132,9 +117,8 @@ export default {
 		}
 		&__average {
 			display: inline-block;
-			padding-left: 5px;
-			padding-right: 5px;
-			// height: 30px;
+			padding-left: 8px;
+			padding-right: 8px;
 			margin-bottom: 15px;
 			background-color: #bfff00;
 			border-radius: 5px; 

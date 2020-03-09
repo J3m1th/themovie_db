@@ -2,27 +2,28 @@
 	section.movies
 		template(v-if="!hidden")
 			h2.movies__title Popular movies
-			.movies__container(v-lazy-load)
+			.movies__container
 				.movie.movies__item(v-for="(movie, index) in popularMovies.results" :key="movie.id")
 					favorites-button.movie__favorites-button(@toggle-checkbox="toggleCheckboxOuter" @add-remove-movie="addRemoveMovie(index)" :checkPlease="isThisFilmInFavorite(movie)")
 					nuxt-link(:to=" 'movies/movie/' + (movie.id) " no-prefetch)
 						.text.movie__text
 							h3.text__title {{movie.title}}
-							.text__genres(v-for="genre in movie.genres" :key="genre.id")
-								.text__genre {{genre.name}}
+							//- .text__genres
+							//- 	p.text__genre(v-for="item in getGenreMovieListByIdArray(movie.genre_ids)") {{ item.name }}
 							.text__date {{movie.release_date}}
 						img.movie__img(:src="movie.poster_path ? 'http://image.tmdb.org/t/p/w500/' + movie.poster_path : require('~/static/images/stub-img.png')")
 </template>
 
 <script>
 
+import {mapGetters} from "vuex";
 import favoritesButton from '~/components/favorites-button.vue';
 
 export default {
 	name: 'movies-block',
 
 	components: {
-		'favorites-button': favoritesButton
+		'favorites-button': favoritesButton,
 	},
 
 	props: ['page', 'popularMovies', 'hidden', 'genreMovieList'],
@@ -37,15 +38,12 @@ export default {
 	},
 
 	computed: {
-		// movieGenre() {
-		// 	return this.genreMovieList.genres.filter(el => el.id === this.movieId);
-		// }
+		...mapGetters({
+			getGenreMovieListByIdArray: 'movies/getGenreMovieListByIdArray',
+		}),
 	},
 
 	mounted() {
-		console.log('movie genres in movies-block')
-		console.log(this.genreMovieList)
-
 		if (localStorage.getItem('favoriteMovies')) {
 			try {
 				this.favoriteMovies = JSON.parse(localStorage.getItem('favoriteMovies'));
@@ -84,11 +82,6 @@ export default {
 			this.saveMovies();
 		},
 		
-		// removeMovie(index) {
-		// 	this.favoriteMovies = this.favoriteMovies.filter(fm => fm.movieId !== this.popularMovies.results[index].id)
-		// 	this.saveMovies();
-		// },
-
 		saveMovies() {
 			const parsed = JSON.stringify(this.favoriteMovies);
 			localStorage.setItem('favoriteMovies', parsed);
@@ -98,6 +91,8 @@ export default {
 
 		setHeadersTitleMaxHeight() {
 			const tabsHeadSelectors = document.querySelectorAll('.text__title');
+			const tabsGenresSelectors = document.querySelectorAll('.text__genres');
+
 			let maxHeadHeight = 0;
 
 			tabsHeadSelectors.forEach(el => {
@@ -117,6 +112,25 @@ export default {
 			tabsHeadSelectors.forEach(selector => {
 				selector.style.height = maxHeadHeight + 'px';
 			});
+
+			// for genres
+			tabsGenresSelectors.forEach(el => {
+				if (el.style.removeProperty) {
+					el.style.removeProperty('height');
+				} else {
+					el.style.removeAttribute('height');
+				}
+			});
+
+			tabsGenresSelectors.forEach(selector => {
+				if (selector.offsetHeight > maxHeadHeight) {
+					maxHeadHeight = selector.offsetHeight;
+				} 
+			});
+
+			tabsGenresSelectors.forEach(selector => {
+				selector.style.height = maxHeadHeight + 'px';
+			});
 		}
 	}
 }
@@ -127,7 +141,6 @@ export default {
 		&__container {
 			display: grid;
 			grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-			// grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 			justify-items: center;
   			grid-gap: 50px 20px;
 		}
@@ -167,6 +180,15 @@ export default {
 		&__title {
 			margin-bottom: 15px;
 			font-family: "Montserrat", sans-serif;
+		}
+		&__genres {
+			margin-bottom: 10px;
+		}
+		&__genre {
+			display: inline-block;
+			margin-right: 5px;
+			margin-bottom: 5px;
+			font-weight: 300;
 		}
 		&__date {
 			margin-bottom: 20px;

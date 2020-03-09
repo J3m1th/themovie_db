@@ -2,9 +2,9 @@
 	transition(name="modal-fade")
 		.modal-backdrop
 			.modal
-				button.modal__btn(type="button" @click="close") X
+				button.modal__btn(type="button" @click="close")
 				.movie.modal__movie(v-for="(movie, index) in favoriteMovies" :key="movie.id")
-					button.movie__btn(type="button" @click="removeMovie(index)") X
+					button.movie__btn(type="button" @click="removeMovie(index)")
 					nuxt-link(:to=" 'movies/movie/' + (movie.id) " no-prefetch)
 						h4.movie__title {{movie.title}}
 						img.movie__img(:src="movie.img ? 'http://image.tmdb.org/t/p/w500/' + movie.img : require('~/static/images/stub-img.png')")
@@ -39,6 +39,8 @@ export default {
 		removeMovie(index) {
 			this.favoriteMovies = this.favoriteMovies.filter(fm => fm.id !== this.favoriteMovies[index].id)
 			this.saveMovies();
+
+			this.$emit('refreshCheckBoxStatus')
 		},
 
 		saveMovies() {
@@ -49,11 +51,6 @@ export default {
 	
 	watch: {
 		refreshData(newVal, oldVal) {
-			// console.log("refreshPlease")
-			// console.log(newVal)
-			// console.log(oldVal)
-			// console.log("-- refreshPlease -- ")
-
 			this.favoriteMovies = newVal;
 		}
 	}
@@ -88,8 +85,8 @@ export default {
 		position: relative;
 		min-height: 100vh;
 		height: 100%;
-		min-width: 25vw;
-		padding: 35px 15px 15px 15px;
+		min-width: 20vw;
+		padding: 50px 35px 15px 25px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -98,15 +95,35 @@ export default {
 		background-color: #F6F5FF;
 		&__btn {
 			position: absolute;
-			top: 10px;
-			right: 20px;
-			border: none;
-			font-size: 15px;
-			padding: 10px;
-			// font-weight: bold;
-			color: #49c5b6;
-			background: transparent;
-			cursor: pointer;
+			top: 15px;
+    		right: 15px;
+			width: 20px;
+			height: 20px;
+			opacity: 0.7;
+			transition: opacity .5s ease;
+			&::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				right: calc(20px / 2);
+				height: 20px;
+				width: 2px;
+				transform: rotate(45deg);
+				background-color: #49c5b6;
+			}
+			&::after {
+				content: '';
+				position: absolute;
+				right: calc(20px / 2);
+				top: 0;
+				height: 20px;
+				width: 2px;
+				transform: rotate(-45deg);
+				background-color: #49c5b6;
+			}
+			&:hover {
+				opacity: 1;
+			}
 		}
 	}
 
@@ -114,9 +131,7 @@ export default {
 		position: relative;
 		max-width: 200px;
 		margin-bottom: 70px;
-		// text-align: center;
 		&__title {
-			// max-width: 50%;
 			margin-bottom: 15px;
 			padding-right: 25px;
 		}
@@ -124,7 +139,33 @@ export default {
 			position: absolute;
 			top: 0;
 			right: 0;
-			color: red;
+			width: 16px;
+			height: 16px;
+			opacity: 0.7;
+			transition: opacity .5s ease;
+			&::before {
+				content: '';
+				position: absolute;
+				top: 0;
+				right: calc(16px / 2);
+				height: 16px;
+				width: 2px;
+				transform: rotate(45deg);
+				background-color: #ff4c4c;
+			}
+			&::after {
+				content: '';
+				position: absolute;
+				right: calc(16px / 2);
+				top: 0;
+				height: 16px;
+				width: 2px;
+				transform: rotate(-45deg);
+				background-color: #ff4c4c;
+			}
+			&:hover {
+				opacity: 1;
+			}
 		}
 		&__img {
 			width: 200px;

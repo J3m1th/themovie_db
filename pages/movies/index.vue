@@ -1,9 +1,9 @@
 <template lang="pug">
 	.container
 		search-block(@refreshFavoriteArray="refreshFavoriteArray" :filteredMovies="filteredMovies" @initSearchOnParent='assignVariable')
-		movies-block(@refreshFavoriteArray="refreshFavoriteArray" :popularMovies="popularMovies" :hidden="queryInnerInner" :page="getMoviePageById" :genreMovieList="getGenreMovieList")
+		movies-block(@refreshFavoriteArray="refreshFavoriteArray" :popularMovies="popularMovies" :hidden="queryInnerInner" :page="getMoviePageById")
 		.info-modal
-			button.info-modal__btn(type="button" @click="showModal") ❤
+			button.info-modal__btn(type="button" @click="showModal" title="Watch later list") ❤
 			info-modal(v-show="isModalVisible" @close="closeModal" :refreshData="refreshableFavoriteMovieArray")
 </template>
 
@@ -58,7 +58,7 @@ export default {
 	mounted() {
 		this.$store.dispatch('movies/fetch');
 		this.$store.dispatch('movies/fetchMovieGenres');
-
+	
 		if(this.queryInnerInner) {
 			this.$store.dispatch('movies/fetch2', this.queryInnerInner);
 		}
@@ -66,9 +66,6 @@ export default {
 
 	methods: {
 		refreshFavoriteArray( {favoriteMovies} ) {
-			console.log('refreshFavoriteArray:')
-			console.log(favoriteMovies);
-			console.log("-- refreshFavoriteArray --")
 			this.refreshableFavoriteMovieArray = favoriteMovies;
 		},
 
@@ -98,10 +95,6 @@ export default {
 	position: relative;
 	min-height: 100vh;
 	padding: 25px 20px 50px 20px;
-// 	display: flex;
-// 	flex-direction: column;
-// 	align-items: center;
-// 	text-align: center;
 }
 
 .info-modal {

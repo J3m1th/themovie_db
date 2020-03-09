@@ -53,7 +53,7 @@ module.exports = {
             directiveOnly: false,
 
             // Default image must be in the static folder
-            defaultImage: '/images/default-image.jpg',
+            // defaultImage: '/images/default-image.jpg',
 
             // To remove class set value to false
             loadedClass: 'isLoaded',

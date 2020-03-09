@@ -41,6 +41,12 @@ export const getters = {
     getGenreMovieList: state => {
         return state.genreMovieList;
     },
+
+    getGenreMovieListByIdArray: state => arr => {
+        return state.genreMovieList.genres.filter((item) => {
+            return arr.find((el) => item.id == el);
+        });
+    },
 }
 
 export const actions = {

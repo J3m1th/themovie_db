@@ -8,12 +8,15 @@
 					nuxt-link(:to=" 'movies/movie/' + (desiredMovie.id) " no-prefetch)
 						.text.desired-movie
 							h3.text__title {{desiredMovie.title}}
+							.text__genres
+								p.text__genre(v-for="item in getGenreMovieListByIdArray(desiredMovie.genre_ids)") {{ item.name }}
 							.text__date {{desiredMovie.release_date}}
 						img.desired-movie__img(:src="desiredMovie.poster_path ? 'http://image.tmdb.org/t/p/w500/' + desiredMovie.poster_path : require('~/static/images/stub-img.png')")
 </template>
 
 <script>
 
+import {mapGetters} from "vuex";
 import favoritesButton from '~/components/favorites-button.vue';
 
 export default {
@@ -35,8 +38,13 @@ export default {
 		}
 	},
 
+	computed: {
+		...mapGetters({
+			getGenreMovieListByIdArray: 'movies/getGenreMovieListByIdArray',
+		}),
+	},
+
 	mounted() {
-		// console.log(this.queryInnerInnerInner);
 		if (localStorage.getItem('favoriteMovies')) {
 			try {
 				this.favoriteMovies = JSON.parse(localStorage.getItem('favoriteMovies'));
@@ -88,6 +96,8 @@ export default {
 
 		setHeadersTitleMaxHeight() {
 			const tabsHeadSelectors = document.querySelectorAll('.text__title');
+			const tabsGenresSelectors = document.querySelectorAll('.text__genres');
+
 			let maxHeadHeight = 0;
 
 			tabsHeadSelectors.forEach(el => {
@@ -105,6 +115,25 @@ export default {
 			});
 
 			tabsHeadSelectors.forEach(selector => {
+				selector.style.height = maxHeadHeight + 'px';
+			});
+
+			// for genres
+			tabsGenresSelectors.forEach(el => {
+				if (el.style.removeProperty) {
+					el.style.removeProperty('height');
+				} else {
+					el.style.removeAttribute('height');
+				}
+			});
+
+			tabsGenresSelectors.forEach(selector => {
+				if (selector.offsetHeight > maxHeadHeight) {
+					maxHeadHeight = selector.offsetHeight;
+				} 
+			});
+
+			tabsGenresSelectors.forEach(selector => {
 				selector.style.height = maxHeadHeight + 'px';
 			});
 		}
@@ -161,6 +190,15 @@ export default {
 	&__title {
 		margin-bottom: 15px;
 		font-family: "Montserrat", sans-serif;
+	}
+	&__genres {
+		margin-bottom: 10px;
+	}
+	&__genre {
+		display: inline-block;
+		margin-right: 5px;
+		margin-bottom: 5px;
+		font-weight: 300;
 	}
 	&__date {
 		margin-bottom: 20px;
